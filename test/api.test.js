@@ -20,15 +20,15 @@ describe('/api/recipes requests', () => {
   test('GET /api/recipes -> 200: Returns all recipes', async () => {
     const {body} = await request.get('/api/recipes').expect(200);
     
-    expect(body.recipes.length).toBe(20);
-
+    expect(body.recipes.length).toBe(10);
     body.recipes.forEach((recipe) => {
-      expect(recipe.toMatchObject({
+
+      expect(recipe).toMatchObject({
         id: expect.any(String),
         imageUrl: expect.any(String),
         instructions: expect.any(String),
         ingredients: expect.any(Array) 
-      }));
+      });
     });
   });
 
