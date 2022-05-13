@@ -32,6 +32,20 @@ describe('/api/recipes requests', () => {
     });
   });
 
+  test.only('GET /api/recipes?exclude_ingredients=... -> 200: Returns valid recipes', async () => {
+    const {body} = await request.get('/api/recipes?excludes_ingredients=apples,bananas,carrots');
+
+    expect(body.recipes.length).toBe(7);
+    const exclude = /(apples|bananas|carrots)/;
+
+    // make sure no ingredients on the exclude list
+    body.recipes.forEach(recipe => {
+      recipe.ingredients.forEach(ingredient => {
+        expect(exclude.test(ingredient.name)).toBe(false);
+      });
+    });
+  });
+
 });
 
 
