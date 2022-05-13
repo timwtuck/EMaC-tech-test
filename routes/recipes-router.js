@@ -1,7 +1,10 @@
 const router = require('express').Router();
-const {getRecipes} = require('../controllers/recipes.controller.js');
+const controller = require('../controllers/recipes.controller.js');
 
 router.route('/')
-    .get(getRecipes);
+    .get(controller.getRecipes);
+
+router.route('/:id')
+    .get(controller.getSingleRecipe);
 
 module.exports = router;

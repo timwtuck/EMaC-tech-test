@@ -41,7 +41,8 @@ describe('/api/recipes requests', () => {
   });
 
   test('GET /api/recipes?exclude_ingredients=... -> 200: Returns valid recipes', async () => {
-    const {body} = await request.get('/api/recipes?excludes_ingredients=apples,bananas,carrots');
+    const {body} = await request.get('/api/recipes?excludes_ingredients=apples,bananas,carrots')
+      .expect(200);
 
     expect(body.recipes.length).toBe(7);
     const exclude = /(apples|bananas|carrots)/;
@@ -54,6 +55,28 @@ describe('/api/recipes requests', () => {
     });
   });
 
+});
+
+describe('/api/recipes/:id requests', () => {
+
+  test('GET api/recipes/:id -> 200: Returns single recipe', async () => {
+
+    const {body} = await request.get('/api/recipes/recipe-88').expect(200);
+
+    expect(body.recipe).toEqual(
+       {
+        "id": "recipe-88",
+        "imageUrl": "http://www.images.com/12",
+        "instructions": "blend with oat milk and ice, sprinkle with salt",
+        "ingredients": [
+          { "name": "blueberries", "grams": 114 },
+          { "name": "coffee", "grams": 20 },
+          { "name": "kale", "grams": 48 }
+        ]
+      }
+    );
+  });
+  
 });
 
 

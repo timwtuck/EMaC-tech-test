@@ -1,4 +1,5 @@
 const db = require('../data/getData.js');
+const errors = require('../errors.js');
 
 exports.getRecipes = (query) => {
 
@@ -22,4 +23,28 @@ exports.getRecipes = (query) => {
     });
 
     return filteredRecipes;
+}
+
+exports.getSingleRecipe = (id) => {
+
+    if (!validateId(id))
+        return Promise.reject(errors.badRequest);
+
+    const recipe = db.filter(recipe => recipe.id === id);
+
+    if (recipe.length === 0)
+        return Promise.reject(errors.IDNotFound);
+
+    return recipe[0];
+}
+
+const validateId = (id) => {
+
+    if (!id)
+        return false;
+
+    if (!/^recipe-[0-9]+/.test(id))
+        return false;
+
+    return true;
 }

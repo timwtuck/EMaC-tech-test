@@ -7,3 +7,11 @@ exports.getRecipes = (req, res, next) => {
     const recipes = recipesModel.getRecipes(exclude);
     res.status(200).send({recipes});
 }
+
+exports.getSingleRecipe = (req, res, next) => {
+
+    const id = req.params.id;
+
+    const recipe = recipesModel.getSingleRecipe(id);
+    res.status(200).send({recipe});
+}
