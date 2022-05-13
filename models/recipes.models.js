@@ -3,8 +3,9 @@ const errors = require('../errors.js');
 
 exports.getRecipes = (query) => {
 
-    if(!query)
+    if(!query) {
         return db;
+    }
 
     // convert to singular words, and convert ot regex
     const singular = query.replace(/s(?=,)|s$/g, '');
@@ -14,8 +15,8 @@ exports.getRecipes = (query) => {
     // filter recipes containing regex
     const filteredRecipes = db.filter(recipe => {
 
-        for (const ingredient of recipe.ingredients){
-            if (excludeRegex.test(ingredient.name)){
+        for (const ingredient of recipe.ingredients) {
+            if (excludeRegex.test(ingredient.name)) {
                 return false;
             }
         }
@@ -27,24 +28,24 @@ exports.getRecipes = (query) => {
 
 exports.getSingleRecipe = (id) => {
 
-    if (!validateId(id))
-        return Promise.reject(errors.badRequest);
-
+    if (!validateId(id)) {
+        return Promise.reject(errors.invalidID);
+    }
+        
     const recipe = db.filter(recipe => recipe.id === id);
 
-    if (recipe.length === 0)
+    if (recipe.length === 0) {
         return Promise.reject(errors.IDNotFound);
+    }
 
     return recipe[0];
 }
 
 const validateId = (id) => {
 
-    if (!id)
+    if (!id || !/^recipe-[0-9]+/.test(id)) {
         return false;
-
-    if (!/^recipe-[0-9]+/.test(id))
-        return false;
+    }
 
     return true;
 }

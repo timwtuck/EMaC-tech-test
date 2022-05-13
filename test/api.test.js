@@ -80,8 +80,13 @@ describe('/api/recipes/:id requests', () => {
   test('GET api/recipes/:id -> 404: ID Not Found', async () => {
 
     const {body} = await request.get('/api/recipes/recipe-1000000').expect(404);
-    
     expect(body.msg).toBe("ID not found");
+  });
+
+  test('Get api/recipes/:id -> 400: Invalid ID', async () => {
+
+    const {body} = await request.get('/api/recipes/88').expect(400);
+    expect(body.msg).toBe("Invalid ID");
   });
   
 });
