@@ -77,6 +77,17 @@ describe('/api/recipes/:id requests', () => {
     );
   });
 
+  test('GET api/recipes/:id -> Recipe Ingredients get reduced', async () => {
+
+    const {body} = await request.get('/api/recipes/recipe-77').expect(200);
+
+    expect(body.recipe.ingredients).toEqual([
+      { "name": "coconut", "grams": 71 },
+      { "name": "lime", "grams": 153 },
+      { "name": "oat milk", "grams": 31 }
+    ]);
+  })
+
   test('GET api/recipes/:id -> 404: ID Not Found', async () => {
 
     const {body} = await request.get('/api/recipes/recipe-1000000').expect(404);
