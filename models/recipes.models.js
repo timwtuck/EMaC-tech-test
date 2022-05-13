@@ -5,7 +5,7 @@ exports.getRecipes = (query) => {
     if(!query)
         return db;
 
-    // convert to singular words, and ocnvert ot regex
+    // convert to singular words, and convert ot regex
     const singular = query.replace(/s(?=,)|s$/g, '');
     const exclude = singular.replace(/,/g, '|');
     const excludeRegex = new RegExp(`(${exclude})`);

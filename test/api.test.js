@@ -7,6 +7,14 @@ beforeEach(() => {
   seed();
 });
 
+describe('General Errors', () => {
+
+  test('404: Path Not Found', async () => {
+    const {body} = await request.get('/api/not_a_path').expect(404);
+    expect(body.msg).toBe('Path not found');
+  });
+});
+
 describe('/api requests', () => {
 
   test('GET /api -> 200: Returns ok', async () => {
@@ -32,7 +40,7 @@ describe('/api/recipes requests', () => {
     });
   });
 
-  test.only('GET /api/recipes?exclude_ingredients=... -> 200: Returns valid recipes', async () => {
+  test('GET /api/recipes?exclude_ingredients=... -> 200: Returns valid recipes', async () => {
     const {body} = await request.get('/api/recipes?excludes_ingredients=apples,bananas,carrots');
 
     expect(body.recipes.length).toBe(7);
