@@ -6,5 +6,6 @@ server.use('/api', apiRouter);
 
 //errors
 server.use(errorHandler.pathNotFound);
+server.use(errorHandler.customError);
 
 module.exports = server;

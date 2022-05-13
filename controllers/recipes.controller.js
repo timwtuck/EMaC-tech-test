@@ -8,10 +8,15 @@ exports.getRecipes = (req, res, next) => {
     res.status(200).send({recipes});
 }
 
-exports.getSingleRecipe = (req, res, next) => {
+exports.getSingleRecipe = async (req, res, next) => {
 
+    try {
     const id = req.params.id;
 
-    const recipe = recipesModel.getSingleRecipe(id);
-    res.status(200).send({recipe});
+    const recipe = await recipesModel.getSingleRecipe(id);
+    res.status(200).send({recipe})
+    }
+    catch(err) {
+        next(err);
+    }
 }

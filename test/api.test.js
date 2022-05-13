@@ -76,6 +76,13 @@ describe('/api/recipes/:id requests', () => {
       }
     );
   });
+
+  test('GET api/recipes/:id -> 404: ID Not Found', async () => {
+
+    const {body} = await request.get('/api/recipes/recipe-1000000').expect(404);
+    
+    expect(body.msg).toBe("ID not found");
+  });
   
 });
 
